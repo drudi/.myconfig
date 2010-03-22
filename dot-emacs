@@ -1,0 +1,219 @@
+;; Emacs customization file
+;; don't forget this is a lisp file
+
+
+;; Color theme
+(require 'color-theme)
+(setq color-theme-is-global t)
+;;(color-theme-robin-hood)
+;;(color-theme-charcoal-black)
+(color-theme-xp)
+
+(ido-mode)
+
+;; No tabs for python
+(setq indent-tabs-mode nil)
+
+
+;; Default font
+(set-default-font "-Misc-Fixed-Medium-R-Normal--14-130-75-75-C-70-ISO8859-1")
+
+;; Highlight text selections
+(transient-mark-mode 1)
+;(setq shift-select-mode t)
+
+;; Highlights parenthesis match
+(show-paren-mode 1)
+
+;; Try to use pdb track
+;;(require 'pdbtrack)
+
+;; Python debuger path(setq pdb-path '/usr/lib/python2.4/pdb.py
+      gud-pdb-command-name (symbol-name pdb-path))
+
+(require 'ipython)
+(global-set-key [(f6)] 'ipython-complete)
+
+
+;; Make ECB vertical splited windows to wrap lines
+(setq truncate-partial-width-windows 'nil)
+
+;; Make sure Pymacs and Yasnippet get into my load path
+(add-to-list 'load-path "~/.emacs.d/vendor")
+(progn (cd "~/.emacs.d/vendor")
+       (normal-top-level-add-subdirs-to-load-path))
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; Auto completion
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'python)
+(require 'auto-complete)
+(require 'auto-complete-config)
+(require 'yasnippet)
+
+;(global-auto-complete-mode t)
+
+(autoload 'python-mode "python-mode" "Python Mode." t)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+
+;; Initialize Pymacs                                                                                           
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+;; Initialize Rope                                                                                             
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
+
+;; Initialize Yasnippet                                                                                        
+;Don't map TAB to yasnippet                                                                                    
+;In fact, set it to something we'll never use because                                                          
+;we'll only ever trigger it indirectly.                                                                        
+(setq yas/trigger-key (kbd "C-c <kp-multiply>"))
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/snippets")
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                         
+;;; Auto-completion                                                                                            
+;;;  Integrates:                                                                                               
+;;;   1) Rope                                                                                                  
+;;;   2) Yasnippet                                                                                             
+;;;   all with AutoComplete.el                                                                                 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                         
+(defun prefix-list-elements (list prefix)
+  (let (value)
+    (nreverse
+     (dolist (element list value)
+      (setq value (cons (format "%s%s" prefix element) value))))))
+(defvar ac-source-rope
+  '((candidates
+     . (lambda ()
+         (prefix-list-elements (rope-completions) ac-target))))
+  "Source for Rope")
+(defun ac-python-find ()
+  "Python `ac-find-function'."
+  (require 'thingatpt)
+  (let ((symbol (car-safe (bounds-of-thing-at-point 'symbol))))
+    (if (null symbol)
+        (if (string= "." (buffer-substring (- (point) 1) (point)))
+            (point)
+          nil)
+      symbol)))
+(defun ac-python-candidate ()
+  "Python `ac-candidates-function'"
+  (let (candidates)
+    (dolist (source ac-sources)
+      (if (symbolp source)
+          (setq source (symbol-value source)))
+      (let* ((ac-limit (or (cdr-safe (assq 'limit source)) ac-limit))
+             (requires (cdr-safe (assq 'requires source)))
+             cand)
+        (if (or (null requires)
+                (>= (length ac-target) requires))
+            (setq cand
+                  (delq nil
+                        (mapcar (lambda (candidate)
+                                  (propertize candidate 'source source))
+                                (funcall (cdr (assq 'candidates source)))))))
+        (if (and (> ac-limit 1)
+                 (> (length cand) ac-limit))
+            (setcdr (nthcdr (1- ac-limit) cand) nil))
+        (setq candidates (append candidates cand))))
+    (delete-dups candidates)))
+(add-hook 'python-mode-hook
+          (lambda ()
+                 (auto-complete-mode 1)
+                 (set (make-local-variable 'ac-sources)
+                      (append ac-sources '(ac-source-rope) '(ac-source-yasnippet)))
+                 (set (make-local-variable 'ac-find-function) 'ac-python-find)
+                 (set (make-local-variable 'ac-candidate-function) 'ac-python-candidate)
+                 (set (make-local-variable 'ac-auto-start) nil)))
+
+;;Ryan's python specific tab completion                                                                        
+(defun ryan-python-tab ()
+  ; Try the following:                                                                                         
+  ; 1) Do a yasnippet expansion                                                                                
+  ; 2) Do a Rope code completion                                                                               
+  ; 3) Do an indent                                                                                            
+  (interactive)
+  (if (eql (ac-start) 0)
+      (indent-for-tab-command)))
+
+(defadvice ac-start (before advice-turn-on-auto-start activate)
+  (set (make-local-variable 'ac-auto-start) t))
+(defadvice ac-cleanup (after advice-turn-off-auto-start activate)
+  (set (make-local-variable 'ac-auto-start) nil))
+
+(define-key python-mode-map (kbd "M-p") 'ryan-python-tab)
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                         
+;; ;;; End Auto Completion                                                                                        
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Definition of closing tag function
+(defun msh-close-tag ()
+  "Close the previously defined XML tag"
+  (interactive)
+  (let ((tag nil)
+        (quote nil))
+    (save-excursion
+      (do ((skip 1))
+          ((= 0 skip))
+        (re-search-backward "</?[a-zA-Z0-9_-]+")
+        (cond ((looking-at "</")
+               (setq skip (+ skip 1)))
+              ((not (looking-at "<[a-zA-Z0-9_-]+[^>]*?/>"))
+               (setq skip (- skip 1)))))
+      (when (looking-at "<\\([a-zA-Z0-9_-]+\\)")
+        (setq tag (match-string 1)))
+      (if (eq (get-text-property (point) 'face)
+              'font-lock-string-face)
+          (setq quote t)))
+    (when tag
+      (setq quote (and quote
+                       (not (eq (get-text-property (- (point) 1) 'face)
+                                'font-lock-string-face))))
+      (if quote
+          (insert "\""))
+      (insert "</" tag ">")
+      (if quote
+          (insert "\"")))))
+
+;; ;; and bind it to some key, so we can be fast
+(define-key global-map [(control c) (/)] 'msh-close-tag)
+
+;; Try to enable the bindings for closing html tags
+;; (defun my-html-mode-hook ()
+;;   (setq tab-width 4)
+;;   (setq indent-tabs-mode t)
+;;  (define-key html-mode-map (kbd "<tab>") 'my-insert-tab)
+;;  (define-key html-mode-map (kbd "C->") 'sgml-close-tag))
+;; Set the Hook
+;;(add-hook 'html-mode-hook 'my-html-mode-hook)
+
+
+
+(put 'scroll-left 'disabled nil)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(ecb-layout-window-sizes (quote (("left-dir-plus-speedbar" (0.25 . 0.4791666666666667) (0.25 . 0.5)) ("left-analyse" (0.2159090909090909 . 0.2857142857142857) (0.2159090909090909 . 0.23809523809523808) (0.2159090909090909 . 0.21428571428571427) (0.2159090909090909 . 0.23809523809523808)))))
+ '(ecb-options-version "2.32")
+ '(ecb-source-path (quote (("/" "/") (#("/home/drudi/mnt/home-vm/code/Web/Extranet" 0 41 (help-echo "Mouse-2 toggles maximizing, mouse-3 displays a popup-menu")) "Extranet") (#("/home/drudi/code/Web/Site Certisign/Produtos" 0 44 (help-echo "Mouse-2 toggles maximizing, mouse-3 displays a popup-menu")) "SiteCertisign") (#("/home/drudi/mnt/extranet" 0 24 (help-echo "Mouse-2 toggles maximizing, mouse-3 displays a popup-menu")) "extranet_instancia") (#("/home/drudi/mnt/home-vm/code/Web/Extranet" 0 41 (help-echo "Mouse-2 toggles maximizing, mouse-3 displays a popup-menu")) "extranet_wc_remota") (#("/home/drudi/code/Web/Extranet" 0 29 (help-echo "Mouse-2 toggles maximizing, mouse-3 displays a popup-menu")) "extranet_wc_local")))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
