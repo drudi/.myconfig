@@ -1,5 +1,5 @@
-;; Emacs customization file
-;; don't forget this is a lisp file
+;; Emacs customizationnnnn file
+v;; don't forget this is a lisp file
 
 
 ;; Color theme
@@ -8,6 +8,11 @@
 ;;(color-theme-robin-hood)
 ;;(color-theme-charcoal-black)
 (color-theme-xp)
+;;(color-theme-calm-forest)
+;;(color-theme-clarity)
+;;(color-theme-blue-gnus)
+;;(color-theme-deep-blue)
+
 
 (ido-mode)
 
@@ -15,8 +20,8 @@
 (setq indent-tabs-mode nil)
 
 
-;; Default font
-(set-default-font "-Misc-Fixed-Medium-R-Normal--14-130-75-75-C-70-ISO8859-1")
+;; Default font - better set it in the .Xresources file
+;;(set-default-font "-Misc-Fixed-Medium-R-Normal--14-130-75-75-C-70-ISO8859-1")
 
 ;; Highlight text selections
 (transient-mark-mode 1)
@@ -29,7 +34,7 @@
 ;;(require 'pdbtrack)
 
 ;; Python debuger path(setq pdb-path '/usr/lib/python2.4/pdb.py
-      gud-pdb-command-name (symbol-name pdb-path))
+;;      gud-pdb-command-name (symbol-name pdb-path))
 
 (require 'ipython)
 (global-set-key [(f6)] 'ipython-complete)
@@ -68,10 +73,10 @@
 (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-autoimport t)
 
-;; Initialize Yasnippet                                                                                        
-;Don't map TAB to yasnippet                                                                                    
-;In fact, set it to something we'll never use because                                                          
-;we'll only ever trigger it indirectly.                                                                        
+;; Initialize Yasnippet                  
+;Don't map TAB to yasnippe
+;In fact, set it to something we'll never use because                             
+;we'll only ever trigger it indirectly.                                  
 (setq yas/trigger-key (kbd "C-c <kp-multiply>"))
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/snippets")
