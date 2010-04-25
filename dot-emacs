@@ -7,7 +7,7 @@
 (setq color-theme-is-global t)
 ;;(color-theme-robin-hood)
 ;;(color-theme-charcoal-black)
-(color-theme-xp)
+;;(color-theme-xp)
 ;;(color-theme-calm-forest)
 ;;(color-theme-clarity)
 ;;(color-theme-blue-gnus)
