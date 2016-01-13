@@ -38,7 +38,8 @@ filetype plugin on
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" :PluginClean      - confirms removal of unused plugins; append `!` to
+"                     auto-approve removal
 
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
@@ -60,14 +61,16 @@ set history=1000
 " Tamanho do histórico de Undos
 set undolevels=1000
 
-
 filetype plugin indent on
-
 " Navigate between splits
     nnoremap <C-h> <C-w>h
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
+
+" Shoe unprintable character
+" set list          " Display unprintable characters f12 - switches
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
 " Plugin configuration section
 "
