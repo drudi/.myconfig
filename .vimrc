@@ -9,8 +9,24 @@ call vundle#begin()
     Plugin 'VundleVim/Vundle.vim'
 
     " Keep Plugin commands between vundle#begin/end.
+
+    " NERDTree sidebar
+    Plugin 'scrooloose/nerdtree'
+
     " plugin on GitHub repo
     Plugin 'tpope/vim-fugitive'
+
+    " CTRL+P (Goto file)
+    Plugin 'kien/ctrlp.vim'
+
+    " Barra de status
+    Plugin 'bling/vim-airline'
+
+    " Tema Molokai do TextMate
+    Plugin 'tomasr/molokai'
+
+    " PHP
+    Plugin 'spf13/PIV'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -29,8 +45,36 @@ filetype plugin on
 
 syn on
 set tabstop=4
+set shiftwidth=4
 set expandtab
 set smartindent
 set autoindent
+colorscheme molokai
+
+" Show linenumbers
+set number
+
+" Tamanho do histórico de comandos
+set history=1000
+
+" Tamanho do histórico de Undos
+set undolevels=1000
+
 
 filetype plugin indent on
+
+" Navigate between splits
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+
+" Plugin configuration section
+"
+    " Airline
+    " Mae airline appear at all times, not only on splits
+    set laststatus=2
+
+    " NERDTree
+    " Open /Close NERDTree
+    map <C-n> :NERDTreeToggle<CR>
