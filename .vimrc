@@ -28,6 +28,9 @@ call vundle#begin()
     " PHP
     Plugin 'spf13/PIV'
 
+    " Tema de cores
+    Plugin 'cdmedia/itg_flat_vim'
+    
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "filetype plugin indent on    " required
@@ -50,7 +53,10 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set autoindent
-colorscheme molokai
+
+" Colorschemes
+" colorscheme molokai
+colorscheme itg_flat
 
 " Show linenumbers
 set number
