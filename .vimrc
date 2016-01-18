@@ -30,6 +30,9 @@ call vundle#begin()
 
     " Tema de cores
     Plugin 'cdmedia/itg_flat_vim'
+
+    " Manipulacao de delimitadores
+    Plugin 'tpope/vim-surround'
     
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
