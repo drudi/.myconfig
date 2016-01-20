@@ -87,7 +87,7 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 " Plugin configuration section
 "
     " Airline
-    " Mae airline appear at all times, not only on splits
+    " Make airline appear at all times, not only on splits
     set laststatus=2
 
     " NERDTree
