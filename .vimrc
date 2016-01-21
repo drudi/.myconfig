@@ -22,20 +22,26 @@ call vundle#begin()
     " Barra de status
     Plugin 'bling/vim-airline'
 
-    " Tema Molokai do TextMate
-    Plugin 'tomasr/molokai'
-
     " PHP
     Plugin 'spf13/PIV'
 
     " Tema de cores
     Plugin 'cdmedia/itg_flat_vim'
+    Plugin 'raphamorim/lucario'
+    Plugin 'tomasr/molokai'
 
     " Manipulacao de delimitadores
     Plugin 'tpope/vim-surround'
 
     " Snipets
     Plugin 'mattn/emmet-vim'
+
+    " Highlight and handle whitespaces
+    Plugin 'ntpeters/vim-better-whitespace'
+
+    " Identacao
+    Plugin 'Yggdroot/indentLine'
+    Plugin 'nathanaelkane/vim-indent-guides'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -63,6 +69,7 @@ set autoindent
 " Colorschemes
 " colorscheme molokai
 colorscheme itg_flat
+" colorscheme lucario
 
 " Show linenumbers
 set number
@@ -74,13 +81,17 @@ set history=1000
 set undolevels=1000
 
 filetype plugin indent on
-" Navigate between splits
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
 
-" Shoe unprintable character
+" Shortcuts
+    " Navigate between splits
+        nnoremap <C-h> <C-w>h
+        nnoremap <C-j> <C-w>j
+        nnoremap <C-k> <C-w>k
+        nnoremap <C-l> <C-w>l
+    " Toggle display line numbers
+        map <A-l> :set number!<CR>
+
+" Show unprintable character
 " set list          " Display unprintable characters f12 - switches
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
