@@ -33,6 +33,9 @@ call vundle#begin()
     " Manipulacao de delimitadores
     Plugin 'tpope/vim-surround'
 
+    " File nevigation
+    Plugin 'tpope/vim-vinegar'
+
     " Snipets
     Plugin 'mattn/emmet-vim'
 
