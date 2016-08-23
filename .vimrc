@@ -106,4 +106,5 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
     " NERDTree
     " Open /Close NERDTree
-    map <C-n> :NERDTreeToggle<CR>
+    map <D-1> :NERDTreeToggle<CR>
+    let NERDTreeHijackNetrw = 0
