@@ -49,6 +49,9 @@ call vundle#begin()
     " Support for elm-lang
     Plugin 'lambdatoast/elm.vim'
 
+    " Suport for EditorConfig
+    Plugin 'editorconfig/editorconfig-vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "filetype plugin indent on    " required
@@ -111,3 +114,15 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
     " Open /Close NERDTree
     map <D-1> :NERDTreeToggle<CR>
     let NERDTreeHijackNetrw = 0
+
+" Disbale folding
+set nofoldenable
+
+" Configuring CtrlP
+let g:ctrlp_working_path_mode = 'cr'
+
+" Setting copying to clipboard
+vmap <C-c> "+y
+
+" Setting to paste from clipboard
+imap <C-v> <C-r><C-p>+
