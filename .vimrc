@@ -52,6 +52,13 @@ call vundle#begin()
     " Suport for EditorConfig
     Plugin 'editorconfig/editorconfig-vim'
 
+    " Support for completion
+    if has('nvim')
+        Plugin 'Shougo/deoplete.nvim'
+    else
+        Plugin 'Shougo/neocomplete.vim'
+    endif
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "filetype plugin indent on    " required
@@ -112,7 +119,7 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
     " NERDTree
     " Open /Close NERDTree
-    map <D-1> :NERDTreeToggle<CR>
+    map <M-1> :NERDTreeToggle<CR>
     let NERDTreeHijackNetrw = 0
 
 " Disbale folding
@@ -126,3 +133,8 @@ vmap <C-c> "+y
 
 " Setting to paste from clipboard
 imap <C-v> <C-r><C-p>+
+
+if has("nvim")
+    " Use deoplete.
+    let g:deoplete#enable_at_startup = 1
+endif
