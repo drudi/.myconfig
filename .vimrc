@@ -5,6 +5,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+
     " let Vundle manage Vundle, required
     Plugin 'VundleVim/Vundle.vim'
 
@@ -119,7 +120,7 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
     " NERDTree
     " Open /Close NERDTree
-    map <M-1> :NERDTreeToggle<CR>
+    map <C-a> :NERDTreeToggle<CR>
     let NERDTreeHijackNetrw = 0
 
 " Disbale folding
@@ -133,6 +134,7 @@ vmap <C-c> "+y
 
 " Setting to paste from clipboard
 imap <C-v> <C-r><C-p>+
+
 
 if has("nvim")
     " Use deoplete.
