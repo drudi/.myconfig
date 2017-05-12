@@ -60,6 +60,12 @@ call vundle#begin()
         Plugin 'Shougo/neocomplete.vim'
     endif
 
+    " Support for go
+    Plugin 'fatih/vim-go'
+
+    " Better support for javascript
+    Plugin 'pangloss/vim-javascript'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "filetype plugin indent on    " required
