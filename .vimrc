@@ -79,8 +79,6 @@ call vundle#begin()
     " YouCompleteMe auto completion support
     " Plugin 'Valloric/YouCompleteMe'
 
->>>>>>> 5e9e75663241124869574631ab510664b54fc654
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "filetype plugin indent on    " required
