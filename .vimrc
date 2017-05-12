@@ -65,12 +65,17 @@ call vundle#begin()
     " Support for completion
     if has('nvim')
         Plugin 'Shougo/deoplete.nvim'
+        Plugin 'zchee/deoplete-jedi'
     else
         Plugin 'Shougo/neocomplete.vim'
     endif
 
     " Golang support
     Plugin 'fatih/vim-go'
+
+    " YouCompleteMe auto completion support
+    " Plugin 'Valloric/YouCompleteMe'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
