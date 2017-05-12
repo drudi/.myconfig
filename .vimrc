@@ -30,6 +30,11 @@ call vundle#begin()
     Plugin 'cdmedia/itg_flat_vim'
     Plugin 'raphamorim/lucario'
     Plugin 'tomasr/molokai'
+    Plugin 'lu-ren/SerialExperimentsLain'
+    Plugin 'exitface/synthwave.vim'
+    Plugin 'gkjgh/cobalt'
+    Plugin 'nightsense/seabird'
+    Plugin 'danilo-augusto/vim-afterglow'
 
     " Manipulacao de delimitadores
     Plugin 'tpope/vim-surround'
@@ -53,9 +58,14 @@ call vundle#begin()
     " Suport for EditorConfig
     Plugin 'editorconfig/editorconfig-vim'
 
+    " Vim markdown support
+    Plugin 'godlygeek/tabular'
+    Plugin 'plasticboy/vim-markdown'
+
     " Support for completion
     if has('nvim')
         Plugin 'Shougo/deoplete.nvim'
+        Plugin 'zchee/deoplete-jedi'
     else
         Plugin 'Shougo/neocomplete.vim'
     endif
@@ -65,6 +75,11 @@ call vundle#begin()
 
     " Better support for javascript
     Plugin 'pangloss/vim-javascript'
+
+    " YouCompleteMe auto completion support
+    " Plugin 'Valloric/YouCompleteMe'
+
+>>>>>>> 5e9e75663241124869574631ab510664b54fc654
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -91,8 +106,10 @@ set autoindent
 
 " Colorschemes
 " colorscheme molokai
-colorscheme itg_flat
+" colorscheme itg_flat
 " colorscheme lucario
+" colorscheme afterglow
+colorscheme SerialExperimentsLain
 
 " Show linenumbers
 set number
@@ -141,8 +158,18 @@ vmap <C-c> "+y
 " Setting to paste from clipboard
 imap <C-v> <C-r><C-p>+
 
+" Mappings to move lines up and down
+" move in normal mode
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+" nove selection in visual mode
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 if has("nvim")
     " Use deoplete.
     let g:deoplete#enable_at_startup = 1
 endif
+
+" Highlight current line
+set cursorline
