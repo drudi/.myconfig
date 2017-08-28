@@ -13,6 +13,7 @@ call vundle#begin()
 
     " NERDTree sidebar
     Plugin 'scrooloose/nerdtree'
+    Plugin 'jistr/vim-nerdtree-tabs'
 
     " plugin on GitHub repo
     Plugin 'tpope/vim-fugitive'
@@ -22,9 +23,10 @@ call vundle#begin()
 
     " Barra de status
     Plugin 'bling/vim-airline'
+    Plugin 'vim-airline/vim-airline-themes'
 
     " PHP
-    Plugin 'spf13/PIV'
+    " Plugin 'spf13/PIV'
 
     " Tema de cores
     Plugin 'cdmedia/itg_flat_vim'
@@ -46,11 +48,11 @@ call vundle#begin()
     Plugin 'mattn/emmet-vim'
 
     " Highlight and handle whitespaces
-    Plugin 'ntpeters/vim-better-whitespace'
+    " Plugin 'ntpeters/vim-better-whitespace'
 
     " Identacao
-    Plugin 'Yggdroot/indentLine'
-    Plugin 'nathanaelkane/vim-indent-guides'
+    " Plugin 'Yggdroot/indentLine'
+    " Plugin 'nathanaelkane/vim-indent-guides'
 
     " Support for elm-lang
     Plugin 'lambdatoast/elm.vim'
@@ -76,6 +78,16 @@ call vundle#begin()
     " YouCompleteMe auto completion support
     " Plugin 'Valloric/YouCompleteMe'
 
+    " Tags management - (Buggy. Huge perfomrance penalty!)
+    " Plugin 'xolox/vim-easytags'
+    " Plugin 'xolox/vim-misc'
+
+    " FZF fuzzy finder
+    Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+    " Multiple cursors
+    Plugin 'terryma/vim-multiple-cursors'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -93,6 +105,15 @@ filetype plugin on
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" Airline configs
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
+
+
+
 syn on
 set tabstop=4
 set shiftwidth=4
@@ -101,11 +122,11 @@ set smartindent
 set autoindent
 
 " Colorschemes
-" colorscheme molokai
+colorscheme molokai
 " colorscheme itg_flat
 " colorscheme lucario
 " colorscheme afterglow
-colorscheme SerialExperimentsLain
+" colorscheme SerialExperimentsLain
 
 " Show linenumbers
 set number
@@ -129,7 +150,7 @@ filetype plugin indent on
 
 " Show unprintable character
 " set list          " Display unprintable characters f12 - switches
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+" set listchars=tab:>-,trail:~,extends:>,precedes:<
 
 " Plugin configuration section
 "
@@ -139,7 +160,7 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
     " NERDTree
     " Open /Close NERDTree
-    map <C-a> :NERDTreeToggle<CR>
+    map <F3> :NERDTreeToggle<CR>
     let NERDTreeHijackNetrw = 0
 
 " Disbale folding
@@ -169,3 +190,10 @@ endif
 
 " Highlight current line
 set cursorline
+
+" Improve performance
+autocmd BufWinLeave * call clearmatches()
+
+" look for tags file in current file's dir,
+" then go up until it finds one, up to $HOME
+set tags=./tags;,tags;$HOME
