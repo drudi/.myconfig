@@ -72,8 +72,11 @@ call vundle#begin()
         Plugin 'Shougo/neocomplete.vim'
     endif
 
-    " Golang support
+    " Support for go
     Plugin 'fatih/vim-go'
+
+    " Better support for javascript
+    Plugin 'pangloss/vim-javascript'
 
     " YouCompleteMe auto completion support
     " Plugin 'Valloric/YouCompleteMe'
@@ -87,7 +90,6 @@ call vundle#begin()
 
     " Multiple cursors
     Plugin 'terryma/vim-multiple-cursors'
-
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
