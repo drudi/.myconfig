@@ -94,6 +94,9 @@ call vundle#begin()
     " VueJS syntax highlighting
     Plugin 'posva/vim-vue'
 
+    " Auto open/close brackets
+    Plugin 'jiangmiao/auto-pairs'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "filetype plugin indent on    " required
