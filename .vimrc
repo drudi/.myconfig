@@ -205,6 +205,7 @@ set cursorline
 
 " Improve performance
 autocmd BufWinLeave * call clearmatches()
+set lazyredraw
 
 " look for tags file in current file's dir,
 " then go up until it finds one, up to $HOME
