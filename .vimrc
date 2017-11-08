@@ -192,8 +192,13 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Changing buffers (to simulate changing tabs in airline
-nnoremap <C-PageDown> :bnext<CR>
-nnoremap <C-PageUp>   :bprevious<CR>
+if has(mac)
+    nnoremap <Leader><Left> :bnext<CR>
+    nnoremap <Leader><Right>   :bprevious<CR>
+else
+    nnoremap <C-PageDown> :bnext<CR>
+    nnoremap <C-PageUp>   :bprevious<CR>
+endif
 
 if has("nvim")
     " Use deoplete.
