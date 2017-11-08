@@ -193,8 +193,8 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Changing buffers (to simulate changing tabs in airline
 if has('mac')
-    nnoremap <Leader><Left> :bnext<CR>
-    nnoremap <Leader><Right>   :bprevious<CR>
+    nnoremap <Leader><Right> :bnext<CR>
+    nnoremap <Leader><Left>   :bprevious<CR>
 else
     nnoremap <C-PageDown> :bnext<CR>
     nnoremap <C-PageUp>   :bprevious<CR>
